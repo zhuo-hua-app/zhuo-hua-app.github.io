@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>灼华工作室 - 讯息与联系</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <img src="logo.png" alt="灼华工作室 Logo" />
+        </div>
+        <nav>
+            <ul style="list-style: none;padding: 0;margin: 0;display: flex;float: right;">
+                <li><a href="index.html" style="text-decoration: none;">主页</a></li>
+                <li><a href="main.html" style="text-decoration: none;">讯息和联系</a></li>
+                <li><a href="App.html" style="text-decoration: none;">Apps</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <section id="about" style="background-color: #464646">
+            <h2>关于我们</h2>
+            <p>灼华工作室致力于开发游戏和实用的软件</p>
+        </section>
+        <section id="games" style="background-color: #464646">
+            <h2>作品</h2>
+            <p>
+                云墨笔记<br>
+                灼华FPS 1.0<br>
+                云墨Minecraft Tool<br>
+            </p>
+        </section>
+        <section id="news" style="background-color: #464646">
+            <h2>新闻动态</h2>
+            <p>
+                灼华FPS停更<br>
+                云墨Minecraft Tool上线<br>
+                云墨笔记XI上线<br>
+            </p>
+        </section>
+        <section id="join" style="background-color: #464646">
+            <h2>加入我们</h2>
+            <p>
+                欢迎加入我们的团队！<br>
+                请联系LCM_MC: <br>liuchimo@outlook.com
+            </p>
+        </section>
+        <section id="contact" style="background-color: #464646">
+            <h2>联系我们</h2>
+            <p>
+                如果要联系我们，请你发送邮件至：<br>
+                liuchimo@outlook.com<br>
+                lcm.minecraft.114514@gmail.com<br>
+            </p>
+        </section>
+    </main>
+    <footer>
+        <p>© 2025 灼华工作室. 保留所有权利.</p>
+        <div class="social-media">
+            <a href="https://space.bilibili.com/3493268817971411">BiliBili</a>
+        </div>
+    </footer>
+</body>
+</html>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const elements = document.querySelectorAll('section, h2');
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if(entry.isIntersecting) {
+                    entry.target.style.opacity = 1;
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, { threshold: 0.1 });
+
+        elements.forEach(el => {
+            el.style.opacity = 0;
+            el.style.transform = 'translateY(20px)';
+            el.style.transition = 'all 0.6s ease-out';
+            observer.observe(el);
+        });
+    });
+</script>
