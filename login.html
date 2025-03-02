@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="zh">
+    <head>
+        <meta charset="UTF-8">
+        <title>灼华工作室 - 登录/注册</title>
+        <link rel="stylesheet" href="styles.css">
+    </head>
+    <body>
+        <header>
+            <div class="logo">
+                <img src="logo.png" alt="灼华工作室 Logo" id="logoh" />
+            </div>
+            <nav>
+                <ul style="list-style: none;padding: 0;margin: 0;display: flex;float: right;">
+                    <li><a href="index.html" style="text-decoration: none;">主页</a></li>
+                    <li><a href="main.html" style="text-decoration: none;">讯息和联系</a></li>
+                    <li><a href="App.html" style="text-decoration: none;">Apps</a></li>
+                    <li><button onclick="window.location.href='login.html'" >登录/注册</button></li>
+                </ul>
+            </nav>
+        </header>
+        <main>
+            <form action="/login" method="post" class="login" id="loginForm">
+                <div>
+                    <label for="username">用户名:</label>
+                    <input type="text" id="username" name="username" required>
+                </div>
+                <div>
+                    <label for="password">密码:</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+                <div>
+                    <button type="submit">登录</button>
+                </div>
+            </form>
+            <form action="/register" method="post" class="register" id="registerForm" style="display:none;">
+                <div>
+                    <label for="regUsername">用户名:</label>
+                    <input type="text" id="regUsername" name="regUsername" required>
+                </div>
+                <div>
+                    <label for="regPassword">密码:</label>
+                    <input type="password" id="regPassword" name="regPassword" required>
+                </div>
+                <div>
+                    <label for="regEmail">邮箱:</label>
+                    <input type="email" id="regEmail" name="regEmail" required>
+                </div>
+                <div>
+                    <button type="submit">注册</button>
+                </div>
+            </form>
+        </main>
+        <script>
+            document.getElementById('loginForm').addEventListener('submit', function(event) {
+                event.preventDefault(); // 阻止表单默认提交行为
+
+                const username = document.getElementById('username').value;
+                const password = document.getElementById('password').value;
+
+                // 创建一个包含用户名和密码的对象
+                const loginData = {
+                    username: username,
+                    password: password
+                };
+
+                // 使用 Fetch API 发送 POST 请求到服务器
+                fetch('/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(loginData)
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        alert('登录成功!');
+                        // 重定向到主页或其他页面
+                        window.location.href = 'index.html';
+                    } else {
+                        alert('登录失败: ' + data.message);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('登录请求失败，请稍后再试。');
+                });
+            });
+
+            document.getElementById('registerForm').addEventListener('submit', function(event) {
+                event.preventDefault(); // 阻止表单默认提交行为
+
+                const regUsername = document.getElementById('regUsername').value;
+                const regPassword = document.getElementById('regPassword').value;
+                const regEmail = document.getElementById('regEmail').value;
+
+                // 生成20位UUID
+                const uuid = 'xxxxxxxxxxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+                    const r = Math.random() * 16 | 0;
+                    const v = c === 'x' ? r : (r & 0x3 | 0x8);
+                    return v.toString(16);
+                });
+
+                // 创建一个包含注册信息的对象
+                const registerData = {
+                    username: regUsername,
+                    password: regPassword,
+                    email: regEmail,
+                    uuid: uuid
+                };
+
+                // 使用 Fetch API 发送 POST 请求到服务器
+                fetch('/register', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(registerData)
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        alert('注册成功!');
+                        // 重定向到登录页面或其他页面
+                        window.location.href = 'login.html';
+                    } else {
+                        alert('注册失败: ' + data.message);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('注册请求失败，请稍后再试。');
+                });
+            });
+        </script>
+    </body>
+</html>

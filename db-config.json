@@ -1,0 +1,9 @@
+{
+  "db-connect": {
+    "host": "ohzwv.h.filess.io",
+    "port": 3306,
+    "database": "ZHDATA_treatedsix",
+    "user": "ZHDATA_treatedsix",
+    "password": "68b881500964eed56fd29e4fdcda75c35c421ce9"
+  }
+}

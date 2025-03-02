@@ -219,3 +219,13 @@ a:hover {
     text-decoration: underline;
     color: #bff6cd;
 }
+
+button {
+    border: none; /* 移除边框 */
+    border-radius: 4px; /* 圆角 */
+
+    background-color: #ffffff; /* 白色按钮 */
+    color: #121212; /* 深色字体 */
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s; /* 添加渐变和放大效果 */
+}
