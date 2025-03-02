@@ -20,7 +20,7 @@
             </nav>
         </header>
         <main>
-            <form action="/login" method="post" class="login" id="loginForm">
+            <form action="login.php" method="post" class="login" id="loginForm">
                 <div>
                     <label for="username">用户名:</label>
                     <input type="text" id="username" name="username" required>
@@ -33,7 +33,7 @@
                     <button type="submit">登录</button>
                 </div>
             </form>
-            <form action="/register" method="post" class="register" id="registerForm" style="display:none;">
+            <form action="register.php" method="post" class="register" id="registerForm" style="display:none;">
                 <div>
                     <label for="regUsername">用户名:</label>
                     <input type="text" id="regUsername" name="regUsername" required>
@@ -50,89 +50,22 @@
                     <button type="submit">注册</button>
                 </div>
             </form>
+            <br>
+            <button onclick="toggleForms()">切换登录/注册</button>
         </main>
         <script>
-            document.getElementById('loginForm').addEventListener('submit', function(event) {
-                event.preventDefault(); // 阻止表单默认提交行为
+            function toggleForms() {
+                const loginForm = document.getElementById('loginForm');
+                const registerForm = document.getElementById('registerForm');
 
-                const username = document.getElementById('username').value;
-                const password = document.getElementById('password').value;
-
-                // 创建一个包含用户名和密码的对象
-                const loginData = {
-                    username: username,
-                    password: password
-                };
-
-                // 使用 Fetch API 发送 POST 请求到服务器
-                fetch('/login', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(loginData)
-                })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        alert('登录成功!');
-                        // 重定向到主页或其他页面
-                        window.location.href = 'index.html';
-                    } else {
-                        alert('登录失败: ' + data.message);
-                    }
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    alert('登录请求失败，请稍后再试。');
-                });
-            });
-
-            document.getElementById('registerForm').addEventListener('submit', function(event) {
-                event.preventDefault(); // 阻止表单默认提交行为
-
-                const regUsername = document.getElementById('regUsername').value;
-                const regPassword = document.getElementById('regPassword').value;
-                const regEmail = document.getElementById('regEmail').value;
-
-                // 生成20位UUID
-                const uuid = 'xxxxxxxxxxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
-                    const r = Math.random() * 16 | 0;
-                    const v = c === 'x' ? r : (r & 0x3 | 0x8);
-                    return v.toString(16);
-                });
-
-                // 创建一个包含注册信息的对象
-                const registerData = {
-                    username: regUsername,
-                    password: regPassword,
-                    email: regEmail,
-                    uuid: uuid
-                };
-
-                // 使用 Fetch API 发送 POST 请求到服务器
-                fetch('/register', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(registerData)
-                })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        alert('注册成功!');
-                        // 重定向到登录页面或其他页面
-                        window.location.href = 'login.html';
-                    } else {
-                        alert('注册失败: ' + data.message);
-                    }
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    alert('注册请求失败，请稍后再试。');
-                });
-            });
+                if (loginForm.style.display === 'none') {
+                    loginForm.style.display = 'block';
+                    registerForm.style.display = 'none';
+                } else {
+                    loginForm.style.display = 'none';
+                    registerForm.style.display = 'block';
+                }
+            }
         </script>
     </body>
 </html>
