@@ -25,7 +25,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if ($result->num_rows > 0) {
         echo "登录成功!";
         // 重定向到主页或其他页面
-        header("Location: index.html");
+        header("Location: index");
         exit();
     } else {
         echo "登录失败: 用户名或密码错误";
