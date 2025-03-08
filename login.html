@@ -4,6 +4,44 @@
         <meta charset="UTF-8">
         <title>云湛工作室 - 登录/注册</title>
         <link rel="stylesheet" href="styles.css">
+        <script>
+            function switchForm(formType) {
+                document.getElementById('loginForm').style.display = formType === 'login' ? 'block' : 'none';
+                document.getElementById('registerForm').style.display = formType === 'register' ? 'block' : 'none';
+            }
+
+            function handleLogin(event) {
+                event.preventDefault();
+                const formData = new FormData(document.getElementById('loginForm'));
+                fetch('https://zhuohuastudio.7749.org/login.php', {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        window.location.href = 'https://zhuo-hua-app.github.io';
+                    } else {
+                        alert(data.message);
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+            }
+
+            function handleRegister(event) {
+                event.preventDefault();
+                const formData = new FormData(document.getElementById('registerForm'));
+                fetch('https://zhuohuastudio.7749.org/register.php', {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(response => response.json())
+                .then(data => {
+                    alert(data.message);
+                })
+                .catch(error => console.error('Error:', error));
+            }
+        </script>
     </head>
     <body>
     <header>
@@ -19,8 +57,25 @@
             </ul>
         </nav>
     </header>
-        <h1>注意!</h1>
-        <h2>因为github pages不支持数据库，所以，请在客户端登录/注册([开发中] 云湛Studio Hub)</h2>
-        <h3><a href="index.html">[点击返回首页]</a></h3>
+    <h1>登录</h1>
+    <form id="loginForm" onsubmit="handleLogin(event)">
+        <label for="loginUsername">用户名:</label>
+        <input type="text" id="loginUsername" name="username" required>
+        <label for="loginPassword">密码:</label>
+        <input type="password" id="loginPassword" name="password" required>
+        <button type="submit">登录</button>
+    </form>
+    <h1>注册</h1>
+    <form id="registerForm" style="display:none;" onsubmit="handleRegister(event)">
+        <label for="registerUsername">用户名:</label>
+        <input type="text" id="registerUsername" name="username" required>
+        <label for="registerEmail">邮箱:</label>
+        <input type="email" id="registerEmail" name="email">
+        <label for="registerPassword">密码:</label>
+        <input type="password" id="registerPassword" name="password" required>
+        <button type="submit">注册</button>
+    </form>
+    <button onclick="switchForm('register')">注册</button>
+    <button onclick="switchForm('login')">登录</button>
     </body>
 </html>
