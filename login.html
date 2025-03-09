@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>云湛工作室 - 登录/注册</title>
+    <link rel="stylesheet" href="styles.css">
+    <script>
+        function switchForm(formType) {
+            document.getElementById('loginForm').style.display = formType === 'login' ? 'block' : 'none';
+            document.getElementById('registerForm').style.display = formType === 'register' ? 'block' : 'none';
+        }
+
+        function handleLogin(event) {
+            event.preventDefault();
+            console.log('Login form submitted'); // 添加调试信息
+            const formData = new FormData(document.getElementById('loginForm'));
+            fetch('login.php', {
+                method: 'POST',
+                body: formData
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        window.location.href = 'http://zhuo-hua-app.github.io';
+                    } else {
+                        alert(data.message);
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+        }
+
+        function handleRegister(event) {
+            console.log('Event:', event); // 添加调试信息
+            if (event) {
+                event.preventDefault();
+            } else {
+                console.error('Event is undefined');
+                return;
+            }
+            console.log('Register form submitted'); // 添加调试信息
+            const formData = new FormData(document.getElementById('registerForm'));
+            console.log('FormData:', formData); // 添加调试信息
+            for (var pair of formData.entries()) {
+                console.log(pair[0] + ': ' + pair[1]); // 添加调试信息，打印 FormData 内容
+            }
+            fetch('register.php', {
+                method: 'POST',
+                body: formData
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok ' + response.statusText);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    alert(data.message);
+                })
+                .catch(error => console.error('Error:', error));
+        }
+    </script>
+</head>
+<body>
+<header>
+    <div class="logo">
+        <img src="logo.png" alt="云湛工作室 Logo" id="logoh" />
+    </div>
+    <nav>
+        <ul style="list-style: none;padding: 0;margin: 0;display: flex;float: right;">
+            <li><a href="https://zhuo-hua-app.github.io" style="text-decoration: none;">主页</a></li>
+            <li><a href="https://zhuo-hua-app.github.io/main.html" style="text-decoration: none;">讯息和联系</a></li>
+            <li><a href="https://zhuo-hua-app.github.io/app.html" style="text-decoration: none;">Apps</a></li>
+            <li><button onclick="window.location.href='login.html'" >登录/注册</button></li>
+        </ul>
+    </nav>
+</header>
+<a href="云湛账号管理器安装程序.exe">因为网页注册不可用，注册请下载账号管理器</a>
+<h1>登录</h1>
+<form id="loginForm" onsubmit="handleLogin(event)">
+    <label for="loginUsername">用户名:</label>
+    <input type="text" id="loginUsername" name="username" required>
+    <label for="loginPassword">密码:</label>
+    <input type="password" id="loginPassword" name="password" required>
+    <button type="submit">登录</button>
+</form>
+<h1>注册</h1>
+<form id="registerForm" style="display:none;" onsubmit="handleRegister(event)">
+    <label for="registerUsername">用户名:</label>
+    <input type="text" id="registerUsername" name="username" required>
+    <label for="registerPassword">密码:</label>
+    <input type="password" id="registerPassword" name="password" required>
+    <button type="submit">注册</button>
+</form>
+<button onclick="switchForm('register')">注册</button>
+<button onclick="switchForm('login')">登录</button>
+</body>
+</html>
